@@ -5,9 +5,7 @@ To install this template on your pc:
 
 ```
 git clone https://github.com/elenacamuffo/UnipdMasterThesisTemplate
-cd UnipdMasterThesisTemplate
-cd memoir
-cd doc-scr
+cd UnipdMasterThesisTemplate\memoir\doc-scr
 ```
 
 To compile:
