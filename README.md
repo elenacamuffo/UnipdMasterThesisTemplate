@@ -11,5 +11,5 @@ cd memoir/doc-scr
 To compile:
 
 ```
-xelatex -synctex=1 -interaction=nonstopmode %.tex
+xelatex -synctex=1 -interaction=nonstopmode memman.tex
 ```
