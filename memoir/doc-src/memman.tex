@@ -1,0 +1,393 @@
+%#% extstart input preamble.tex
+%
+% memman.tex  Memoir class user manual (Part II only)  last updated 2009/09/07
+%             Author: Peter Wilson
+%             Copyright 2001, 2002, 2003, 2004, 2008, 2009 Peter R. wilson
+%
+%   This work has the LPPL maintenance status "maintained".
+%   Maintainer: Lars Madsen (daleif at math dot au dot dk)
+%
+%\listfiles
+\documentclass[10pt,extrafontsizes]{memoir}
+\usepackage{comment}
+\usepackage[table,xcdraw, dvipsnames]{xcolor}
+%\usepackage{quotchap}
+%\usepackage[Bjornstrup]{fncychap}
+\setlength{\parindent}{0cm}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{adjustbox}
+\usepackage{lscape}
+\usepackage{geometry}
+\usepackage{psvectorian}
+%\usepackage[natbibapa]{apalike}
+\usepackage{natbib} 
+\usepackage{arydshln}
+%\usepackage{hyperref}
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[T1]{fontenc}
+\usepackage{kpfonts}
+\setSingleSpace{1.1}
+\SingleSpacing
+\usepackage{xcolor, calc, blindtext}
+\definecolor{chaptercolor}{gray}{0.8}
+% helper macros
+\newcommand\numlifter[1]{\raisebox{-2cm}[0pt][0pt]{\smash{#1}}}
+\newcommand\numindent{\kern37pt}
+\newlength\chaptertitleboxheight
+\makechapterstyle{hansen}{
+  \renewcommand\printchaptername{\raggedleft}
+  \renewcommand\printchapternum{%
+    \begingroup%
+    \leavevmode%
+    \chapnumfont%
+    \strut%
+    \numlifter{\thechapter}%
+    \numindent%
+\endgroup%
+}
+  \renewcommand*{\printchapternonum}{%
+    \vphantom{\begingroup%
+      \leavevmode%
+      \chapnumfont%
+      \numlifter{\vphantom{9}}%
+      \numindent%
+      \endgroup}
+    \afterchapternum}
+  \setlength\midchapskip{0pt}
+  \setlength\beforechapskip{0.5\baselineskip}
+  \setlength{\afterchapskip}{3\baselineskip}
+  \renewcommand\chapnumfont{%
+    \fontsize{4cm}{0cm}%
+    \bfseries%
+    \sffamily%
+    \color{chaptercolor}%
+  }
+  \renewcommand\chaptitlefont{%
+    \normalfont%
+    \huge%
+    \bfseries%
+    \raggedleft%
+  }%
+  \settototalheight\chaptertitleboxheight{%
+    \parbox{\textwidth}{\chaptitlefont \strut bg\\bg\strut}}
+  \renewcommand\printchaptertitle[1]{%
+    \parbox[t][\chaptertitleboxheight][t]{\textwidth}{%
+      %\microtypesetup{protrusion=false}% add this if you use microtype
+      \chaptitlefont\strut ##1\strut}%
+}}
+\chapterstyle{hansen}
+\aliaspagestyle{chapter}{empty} % just to save some space
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%
+
+\hfuzz=5pt
+
+%\setlength\overfullrule{5pt}
+
+
+% For (non-printing) notes  \PWnote{date}{text}
+\newcommand{\PWnote}[2]{} 
+\PWnote{2009/04/29}{Added fonttable to the used packages}
+\PWnote{2009/08/19}{Made Part I a separate doc (memdesign.tex).}
+
+% same
+\newcommand{\LMnote}[2]{} 
+
+
+\usepackage{memsty}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{titlepages}  % code of the example titlepages
+\usepackage{memlays}     % extra layout diagrams
+\usepackage{dpfloat}     % floats on facing pages
+\usepackage{fonttable}[2009/04/01]   % font tables
+%%%%\usepackage{xr-hyper} \externaldocument{memdesign} Doesn't work, 
+%%%%                      Idea won't work in general for memman/memdesign
+%%%%                      as at display time, who knows where everything
+%%%%                      will be located on the individual's computer.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%% Change section heading styles
+%%%\memmansecheads
+
+%%%% Use the built-in division styling
+\headstyles{memman}
+
+%%% ToC down to subsections
+\settocdepth{subsubsection}
+%%% Numbering down to subsections as well
+\setsecnumdepth{subsubsection}
+
+%%%% extra index for first lines
+%\makeindex[lines]
+
+
+% this 'if' is used to determine whether we are compiling the memoir
+% master in the subversion repository, or the public memman.tex
+\newif\ifMASTER
+\MASTERfalse
+%\MASTERtrue
+
+\ifMASTER
+
+% add patch to fink, such that \AtEndFile still work
+\makeatletter
+\AtEndFile{fink.sty}{
+  \typeout{patching fink} 
+  \renewcommand{\InputIfFileExists}[2]{%
+    \IfFileExists{##1}%
+    {##2\@addtofilelist{##1}%
+      \m@matbeginf{##1}%
+      \fink@prepare{##1}%
+      %\@@input \@filef@und
+      \expandafter\fink@input%
+      \expandafter\fink@restore\expandafter{\finkpath}%
+     \m@matendf{##1}%
+     \killm@matf{##1}}%
+ }
+}
+\makeatother
+% private package, not in circulation
+% enables us to gather svn information on a single file basis
+%\usepackage[filehooks]{svn-multi-private}
+% use the current version
+\usepackage[filehooks]{svn-multi}
+
+
+% \svnidlong
+% {}
+% {$LastChangedDate: 2020-03-25 19:00:55 +0100 (Wed, 25 Mar 2020) $}
+% {$LastChangedRevision: 686 $}
+% {$LastChangedBy: daleif@math.au.dk $}
+
+
+
+\makeatletter
+\newcommand\addRevisionData{%
+  \begin{picture}(0,0)%
+    \put(0,-20){%
+      \tiny%
+      \expandafter\@ifmtarg\expandafter{\svnfiledate}{}{%
+        \textit{\textcolor{darkgray}{Chapter last updated \svnfileyear/\svnfilemonth/\svnfileday
+         \enspace (revision \svnfilerev)}}
+     }%
+    }%
+  \end{picture}%
+}
+\makeatother
+
+% we add this to the first page of each chapter
+
+\makepagestyle{chapter}
+\makeoddfoot{chapter}{\addRevisionData}{\thepage}{}
+\makeevenfoot{chapter}{\addRevisionData}{\thepage}{}
+
+\else
+% disable svn info collecting
+\newcommand\svnidlong[4]{}
+\fi
+
+%% end preamble
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%#% extend
+
+
+%\hfuzz=10pt
+
+\usepackage[draft]{fixme}
+\fxsetup{
+  multiuser,
+  marginface=\normalfont\tiny,
+  innerlayout=noinline,
+  layout=marginnote,
+}
+\usepackage{tikz,ragged2e}
+\makeatletter
+% extra feature, vadj=length kan flytte på fxnotes hvis de overlapper
+\@fxdefinekey{layout}{vadj}{\def\marginnotevadjust{#1}}
+
+% endnu mere ekstra feature, kræver tikz og calc tikz lib
+
+\renewcommand*\FXLayoutMarginNote[3]{%
+  \tikz[overlay,remember picture]\coordinate (A) at (0,0);%
+  \marginnote[%
+    \RaggedLeft%
+    \rlap{\tikz[overlay,remember picture]\coordinate(C) at (0,0);}%
+    \@fxuseface{margin}%
+    \@fxtextstd{#1}{#2}{#3}%
+    {\tikz[overlay,remember picture,ultra thin,cyan]\draw(A) -| ++(0,-2pt) -|(C);}%
+  ]{%
+    \RaggedRight%
+    \tikz[overlay,remember picture]\coordinate(B) at (0,0);%
+    \@fxuseface{margin}%
+    \@fxtextstd{#1}{#2}{#3}%
+    \tikz[overlay,remember picture,ultra thin,cyan]\draw(A) -| ++(0,-2pt) -|(B);%
+  }%
+}
+\makeatother
+
+
+
+\begin{document}
+
+
+%#% extstart input intro.tex
+
+% Coarse-to-fine Curriculum Learning in LiDAR semantic segmentation by contrasting visual representations.
+
+
+
+%\tightlists
+\firmlists
+\midsloppy
+\raggedbottom
+\chapterstyle{hansen}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{memnoidxnum}
+
+%In the middle if you want to change the margins use
+\newgeometry{left=0.7in,right=0.5in,top=1in,bottom=1in}
+\clearpage
+\pagestyle{empty}
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%		   PERSONALIZED TITLEPAGE   	    %%%%
+
+% author: Elena Camuffo Copyright 2021
+% insert here the data for the titlepage
+
+\definecolor{M2}{HTML}{9B0014}
+\definecolor{SchoolColor}{rgb}{0.71, 0, 0.106} %Unipd color
+
+\newcommand{\UnivName}{University of Padova}
+\newcommand{\UnivPlace}{Padova}
+\newcommand{\DeptName}{Information Engineering}
+
+\newcommand{\DegreeName}{Master Degree in ICT for internet and multimedia}
+\newcommand{\ThesisTitle}{Curriculum and Contrastive Learning\\in LiDAR Semantic Segmentation}
+
+\newcommand{\SupName}{Simone}
+\newcommand{\SupSurname}{Milani}
+
+%comment these lines if there are no supervisors
+\newcommand{\CosupName}{Umberto}
+\newcommand{\CosupSurname}{Michieli}
+
+\newcommand{\AuthName}{Elena}
+\newcommand{\AuthSurname}{Camuffo}
+
+\newcommand{\AcademicYear}{2020-2021}
+\newcommand{\GraduationDay}{September 6, 2021}
+%%%%
+
+% print the titlepage
+\mytitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\vspace{2\baselineskip}
+\cleardoublepage
+
+%%%%%%%%%%%%%%%%% DEDICATION %%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\begin{center}
+    \thispagestyle{empty}
+    \vspace*{\fill}
+    \psvectorian[scale=0.5]{188}
+    \vspace{0.5cm}\\
+    \textsc{Dedication.}
+        \vspace*{\fill}
+\end{center}
+\cleardoublepage
+%\restoregeometry
+
+%%%%%%%%%%%%%%%%%%%  QUOTE  %%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\begin{center}
+    \thispagestyle{empty}
+    \vspace*{\fill}
+    %\psvectorian[scale=0.5]{183}\vspace{0.5cm}\\
+\emph{"Simplicity is the end result of long, hard work, not the starting point. "} \\
+\vspace{0.2cm}
+- Frederick Maitland -
+    \vspace*{\fill}
+\end{center}
+\cleardoublepage
+\restoregeometry
+
+
+% Abstract: Remove indents around abstract text
+\setlength{\absleftindent}{0pt}
+\setlength{\absrightindent}{0pt}
+% Change font size to conform with the rest of the document text
+\renewcommand{\abstracttextfont}{\normalsize}
+\abstractintoc % Include "Abstract" in ToC
+
+\include{Chapters/Abstract.tex}
+\cleardoublepage
+\include{Chapters/Sommario.tex}
+\cleardoublepage
+
+% ToC, etc
+%\pagenumbering{roman}
+\pagestyle{Ruled}
+
+%%%%%%%%%%%%%%% TABLES OF CONTENT %%%%%%%%%%%%%%%%%%
+%\setupshorttoc
+\tableofcontents
+\clearforchapter
+\setupparasubsecs
+\setupmaintoc
+
+\setlength{\unitlength}{1pt}
+\clearpage
+\listoffigures
+\clearpage
+\listoftables
+\cleardoublepage
+%\listofegresults
+%\clearpage
+%\nomenclature
+
+%#% extend
+%#% extstart include preface.tex
+%\chapter{Foreword}
+
+\svnidlong
+{$Ignore: $}
+{$LastChangedDate: 2014-11-05 16:28:11 +0100 (Wed, 05 Nov 2014) $}
+{$LastChangedRevision: 501 $}
+{$LastChangedBy: daleif $}
+
+%%%%%%%%%%%%%%  CHAPTERS  %%%%%%%%%%%%%%%%%%%
+\include{Chapters/Intro}
+\include{Chapters/Chapter_1}
+\include{Chapters/Chapter_2}
+%to add more chapters duplicate one of the templates in "Chapters" folder and add further \include{Chapters/Chapter_#} where # is the chapter number
+\include{Chapters/Conclusions}
+
+\begin{appendices}
+\include{Chapters/Appendix}
+\end{appendices}
+\include{Acknowledgements/Acknowledgements}
+
+%%%%%%%%%%%%  BIBLIOGRAPHY  %%%%%%%%%%%%%%%%%
+%\bibliographystyle{plain} % We choose the "plain" reference style
+\bibliography{bibliography} % Entries are in the "refs.bib" file
+
+\end{document}
+
+\endinput
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% TeX-source-specials-mode: t
+%%% TeX-PDF-mode: t
+%%% End: 

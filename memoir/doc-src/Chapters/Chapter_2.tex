@@ -1,0 +1,27 @@
+\chapter{Results}\label{ch:results}
+\textit{In this chapter the results of the simulations led are presented.}
+\vspace{0.25cm}
+\par\fancybreak{$***$}\par
+\vspace{0.35cm}
+
+Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+\begin{table}[h]
+\centering
+\setlength{\tabcolsep}{2pt}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{r|c|ccccccccccccccccccc}
+Trial   name & \rotatebox{90}{mIoU} & \rotatebox{90}{car}  & \rotatebox{90}{bicycle} & \rotatebox{90}{motorcycle} & \rotatebox{90}{truck} & \rotatebox{90}{other-vehicle} & \rotatebox{90}{person} & \rotatebox{90}{bicyclist} & \rotatebox{90}{motorcyclist} & \rotatebox{90}{road} & \rotatebox{90}{parking} & \rotatebox{90}{sidewalk} & \rotatebox{90}{other-ground} & \rotatebox{90}{building} & \rotatebox{90}{fence} & \rotatebox{90}{vegetation} & \rotatebox{90}{trunk} & \rotatebox{90}{terrain} & \rotatebox{90}{pole} & \rotatebox{90}{traffic-sign} \\
+\hline
+Original          & 52.91 & 92.94 & 12.67   & 28.43      & 70.02 & 35.62         & 52.31  & 69.03     & 0.00         & 91.15 & 37.06   & 75.96    & 1.45         & 87.62    & 43.68 & 84.95      & 60.23 & 73.67   & 51.56 & 36.93        \\
+fairness $\gamma=10$ + C2F  & 53.00    & 93.3 0 & 11.31   & 29.96      & 76.27 & 40.53         & 49.24  & 55.34     & 0.00            & 91.49 & 39.06   & 76.75    & 1.59         & 87.63    & 45.36 & 85.64      & 60.30  & 73.90    & 52.59 & 36.80         \\
+hierarchy $\gamma=0.01$ + fairness $\gamma=10$  & 53.87 & 93.23 & 16.33   & 32.23      & 66.55 & 41.18         & 52.92  & 67.67     & 0.00            & 91.79 & 39.91   & 76.65    & 0.45         & 87.78    & 43.96 & 85.41      & 62.13 & 73.26   & 52.95 & 39.09        \\
+hierarchy $\gamma=0.01$ + C2F    & 52.95 & 93.18 & 15.51   & 27.69      & 72.37 & 40.62         & 44.61  & 67.77     & 0.00            & 91.54 & 39.36   & 76.83    & 0.68         & 87.78    & 42.24 & 84.99      & 59.62 & 75.51   & 51.16 & 34.63  \\
+hierarchy   $\gamma=0.05$ + fairness $\gamma=10$       & 53.99 & 92.83 & 17.72 & 30.83 & 73.59 & 38.74 & 49.96 & 69.87 & 0.00 & 91.64 & 42.39 & 76.92 & 3.29 & 87.33 & 44.12 & 85.15 & 58.52 & 73.89 & 51.15 & 37.91 \\
+hierarchy   $\gamma=0.01$ + fairness $\gamma=10$ + C2F & 54.12 & 93.12 & 15.42 & 34.01 & 63.76 & 40.66 & 53.83 & 66.63 & 0.00 & 91.54 & 40.78 & 77.11 & 1.34 & 89.16 & 48.93 & 85.47 & 61.58 & 73.45 & 52.48 & 39.06 \\
+hierarchy   $\gamma=0.05$ + fairness $\gamma=10$ + C2F & \textbf{54.34} & 93.52 & 14.30 & 32.01 & 73.34 & 40.46 & 51.26 & 66.84 & 0.00 & 91.61 & 41.73 & 76.18 & 1.27 & 88.92 & 47.89 & 84.24 & 62.85 & 73.92 & 52.39 & 39.77
+\end{tabular}%
+}
+\caption{Example table.}
+\label{tab:res-joint}
+\end{table}
