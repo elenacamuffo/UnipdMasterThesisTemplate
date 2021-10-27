@@ -4,5 +4,12 @@ Latex template created on the basis of [memoir](https://www.ctan.org/pkg/memoir)
 To install this template on your pc:
 
 ```
-git clone https://github.com/elenacamuffo/UnipdMasterThesisTemplate 
+git clone https://github.com/elenacamuffo/UnipdMasterThesisTemplate
+cd memoir/doc-scr
+```
+
+To compile:
+
+```
+xelatex -synctex=1 -interaction=nonstopmode %.tex
 ```
